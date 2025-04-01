@@ -1,0 +1,77 @@
+baselines:
+  
+  forms: 
+    Contact:
+      subject: "Thanks for reaching out to Springs RV Resort 
+      body: 
+        <html>
+        <body>
+        <p>"Hi {first_name},</p>
+        <p>Thanks so much for reaching out! My name is Kelsey, and I’m the Sales Assistant here at Springs RV Resort.</p>
+        <p>I’d be happy to set you up with our Sales Manager, Jamie Smith, for a personal resort tour so you can get a feel for what makes the Springs so special. You’re welcome to reply with a day and time that works best for you, or you can use our online calendar to book directly":"" <a href="https://calendly.com/springs-rv-resort/springs-rv-resort-sales-meeting">BOOK HERE</a> or call 778-871-3160 to find a time to come out.</p>  
+        <p>As you may know, our resort offers daily rentals, seasonal rentals, and RV lot ownership. If you’re exploring ownership, our brand-new Phase 3 lots range from $269,000 to over $300,000. We also have a selection of resale lots available through our realtor, and you can browse current listings with photos and pricing <a href="https://springsrv.com/resale-lots-for-sale/">(click here)</a>. The monthly maintenance fee is $210, which includes your property taxes and helps keep the resort, amenities, and pools looking beautiful year-round.</p>
+        <p>In the meantime, I’ve included our <a href="https://drive.google.com/file/d/1qYhagNPQEBBDbBXHJ7jBc0wMjS6sX45Y/view?usp=sharing">Phase 3 Price List & Lot Map</a> so you can explore availability, financing options, and layout details at your own pace.</p>
+        <p>If you have any questions or would like to chat before your visit, I’m always here to help!</p>
+        <p>Warmly,<br>
+        Kelsey<br>
+        Sales Assistant<br>
+        <a href="mailto:sales@springsrv.com">sales@springsrv.com<a/></p>
+        <p><strong>Please note":"" Our Resort is recreational use only and does not allow full-time living. Our owners and seasonals enjoy occasional winter use and RV storage.</p> 
+        </body>
+        </html>
+        
+  forms:
+    waitlist:
+      subject: "Re: Springs RV Resort Join the waitlist"
+      body: 
+        <html>
+        <body>
+        <p>Hello {first_name},</p>
+        <p>Thank you for joining the waitlist at Springs RV Resort.</p>
+        <p>We have received your details and will be in touch soon with more information.</p>
+        <pBest regards,<br>
+        Kelsey,<br>
+        Springs RV Resort<br>
+        <a href="mailto:sales@springsrv.com">sales@springsrv.com<a/></p>
+        <p><strong>"Please note":"" Our Resort is recreational use only and does not allow full-time living. Our owners and seasonals enjoy occasional winter use and RV storage. 
+        </html>
+        </body>
+  
+  forms:
+    pricelist:
+      subject: "Springs RV Resort Phase 3 Price List Map For You!"
+      body:
+        <html>
+        <body>
+        <p>Hi {first_name}</pr>
+        <p>Thank you for your interest in the Springs RV Resort. My name is Kelsey, and I’m the Sales Assistant here at Springs RV Resort.</pr>
+        <p>I’ve included our <a href="https://drive.google.com/file/d/1qYhagNPQEBBDbBXHJ7jBc0wMjS6sX45Y/view?usp=sharing">Phase 3 Price List & Lot Map</a> so you can explore availability, financing options, and layout details at your own pace. Our Phase 3 lots range from $269,000 to over $300,000. We also have lots that are for sale through our realtor and you can see prices and images <a href="https://springsrv.com/resale-lots-for-sale/">here</a>. The monthly maintenance fee is $210 and this includes your property taxes as well and this keeps the resort and pools looking beautiful!</pr>
+        <p>I’d be happy to set you up with our Sales Manager, Jamie Smith, for a personal resort tour so you can get a feel for what makes the Springs so special. You’re welcome to reply with a day and time that works best for you, or you can use our online calendar to book directly":" <a href="https://calendly.com/springs-rv-resort/springs-rv-resort-sales-meeting">BOOK HERE</a> or call 778-871-3160 to find a time to come out.</pr> 
+        <p>If you have any questions or would like to chat before your visit, I’m always here to help!</pr>
+        <p>Warmly,<br>
+        Kelsey<br>
+        Sales Assistant<br>
+        <a href="mailto:sales@springsrv.com">sales@springsrv.com<a/></p>
+        <p><strong>"Please note":"" Our Resort is recreational use only and does not allow full-time living. Our owners and seasonals enjoy occasional winter use and RV storage. 
+        </html>
+        </body>
+
+
+
+
+  
+  complaint:
+    subject: "We’re Addressing Your Complaint"
+    body: "Dear Customer,\n\nWe’re sorry to hear about your experience. Your complaint is being reviewed by our support team, and we’ll contact you soon with a resolution.\n\nSincerely,\nYour Team"
+  
+  support:
+    subject: "Support Request Received"
+    body: "Hello,\n\nYour support request has been successfully received. Our support team is reviewing your case and will reach out with further assistance shortly.\n\nBest regards,\nYour Support Team"
+  
+  escalation:
+    subject: "Your Case Has Been Escalated"
+    body: "Dear Customer,\n\nYour case has been escalated to our senior team. We are working on a solution and will update you as soon as possible.\n\nSincerely,\nYour Team"
+
+meta:
+  version: "1.0"
+  description: "Baseline templates for generating email responses based on email types."
