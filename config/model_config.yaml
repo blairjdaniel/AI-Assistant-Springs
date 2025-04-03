@@ -1,5 +1,13 @@
+split:
+  test_size: 0.2
+  random_state: 42
+
+pipeline:
+  task: "text-generation"
+  model_name: "EleutherAI/gpt-neo-1.3B"
+
 model:
-  name: "bert-base-uncased"  # Use Hugging Face models, or change to another model name
+  name: "EleutherAI/gpt-neo-1.3B"  # Use Hugging Face models, or change to another model name
   training:
     epochs: 3
     batch_size: 32
@@ -7,7 +15,7 @@ model:
     max_seq_length: 128
 
 tokenizer:
-  name: "bert-base-uncased"  # Typically matches the model name
+  name: "EleutherAI/gpt-neo-1.3B"  # Typically matches the model name
   do_lower_case: true
   truncation: true
   padding: "max_length"
