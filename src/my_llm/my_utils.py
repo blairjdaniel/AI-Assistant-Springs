@@ -344,8 +344,113 @@ def parse_brandbook(text):
     
     return entries
 
-# Sample usage for testing (can be removed or placed under '__main__')
+import json
+
+def convert_conversation_to_example(conversation):
+    # For each conversation, we will use the first user message as prompt
+    # and the assistant’s first response as completion
+    messages = conversation.get("messages", [])
+    prompt = ""
+    completion = ""
+    for msg in messages:
+        if msg["role"] == "user":
+            prompt += msg["text"].strip() + "\n"
+        elif msg["role"] == "assistant" and not completion:
+            completion = msg["text"].strip()
+    # Optionally, add a stop sequence (ensure newlines or a token is defined for your training)
+    if not completion.endswith("\n"):
+        completion += "\n"
+    return {"prompt": prompt, "completion": completion}
+   
+    print("Training file created at", output_path)
+
+import glob
+import json
+import os
+
+def load_all_jsonl_files(directory: str) -> list:
+    """
+    Loads and combines data from all JSONL files in the specified directory.
+    
+    Parameters:
+        directory (str): Path to the directory containing JSONL files.
+    
+    Returns:
+        A list with the combined data entries from all processed JSONL files.
+    """
+    jsonl_files = glob.glob(os.path.join(directory, "*.jsonl"))
+    all_data = []
+    for file_path in jsonl_files:
+        with open(file_path, "r") as f:
+            for line in f:
+                try:
+                    data = json.loads(line)
+                    all_data.append(data)
+                except json.JSONDecodeError as e:
+                    print(f"Error decoding JSON in file {file_path}: {e}")
+    return all_data
+
+import pandas as pd
+def load_normalized_jsonl(file_path: str) -> pd.DataFrame:
+    """
+    Loads a JSONL file into a Pandas DataFrame and normalizes nested fields.
+    
+    Parameters:
+        file_path (str): Path to the JSONL file.
+    
+    Returns:
+        pd.DataFrame: A normalized DataFrame containing the data.
+    """
+    
+    # Read the JSONL file using Pandas
+    df = pd.read_json(file_path, lines=True)
+    # Normalize the DataFrame entries
+    normalized_df = pd.json_normalize(pd.DataFrame(df).to_dict(orient='records'))
+    return normalized_df
+
+def load_txt_files_to_df(directory: str) -> pd.DataFrame:
+    """
+    Loads all .txt files in a directory into a pandas DataFrame.
+    
+    Parameters:
+        directory (str): Path to the directory containing .txt files.
+        
+    Returns:
+        pd.DataFrame: A DataFrame with columns "filename" and "content".
+    """
+    data = []
+    # List all files in the directory
+    for fname in os.listdir(directory):
+        if fname.lower().endswith(".txt"):
+            file_path = os.path.join(directory, fname)
+            try:
+                with open(file_path, "r", encoding="utf-8") as f:
+                    content = f.read()
+                data.append({"filename": fname, "content": content})
+            except Exception as e:
+                print(f"Error reading file {file_path}: {e}")
+    return pd.DataFrame(data)
+
+from sklearn.model_selection import train_test_split
+import pandas as pd
+
+def split_train_test(df: pd.DataFrame, test_size: float = 0.2, random_state: int = 42) -> tuple:
+    """
+    Splits a DataFrame into train and test DataFrames.
+
+    Parameters:
+        df (pd.DataFrame): DataFrame to split.
+        test_size (float): Fraction of the data to use for testing.
+        random_state (int): Random seed for reproducibility.
+
+    Returns:
+        tuple: (train_df, test_df)
+    """
+    train_df, test_df = train_test_split(df, test_size=test_size, random_state=random_state)
+    return train_df, test_df
+
 if __name__ == "__main__":
+
     # Test cleaning function
     sample_text = "Hello, World! This is a sample text. Contact us at example@test.com. Call us at 604-557-6168."
     cleaning_conf = {
@@ -403,3 +508,34 @@ if __name__ == "__main__":
     with open(output_path, "w") as outfile:
         json.dump(parsed_entries, outfile, indent=4)
     print("Parsed brand book saved to", output_path)
+
+    input_path = "/Users/blairjdaniel/AI-Assistant-Springs/data/pre-output/gpt.json"
+    output_path = "/Users/blairjdaniel/AI-Assistant-Springs/data/training_data.jsonl"
+    with open(input_path, "r") as infile:
+        conversations = json.load(infile)
+    with open(output_path, "w") as outfile:
+        for conversation in conversations:
+            example = convert_conversation_to_example(conversation)
+            outfile.write(json.dumps(example) + "\n")
+
+    data_dir = "/Users/blairjdaniel/AI-Assistant-Springs/data/outputs"
+    combined_data = load_all_jsonl_files(data_dir)
+    print("Combined dataset count:", len(combined_data))
+
+    file_path = "/Users/blairjdaniel/AI-Assistant-Springs/data/outputs/brandbook.jsonl"
+    normalized_brandbook = load_normalized_jsonl(file_path)
+    print("Normalized DataFrame shape:", normalized_brandbook.shape)
+
+    txt_directory = "/Users/blairjdaniel/AI-Assistant-Springs/data/outputs"
+    df_txt = load_txt_files_to_df(txt_directory)
+    print("Loaded", len(df_txt), "text files")
+    print(df_txt.head())
+
+    data_dir = "/Users/blairjdaniel/AI-Assistant-Springs/data/outputs"
+    combined_data = load_all_jsonl_files(data_dir)  # or your combined DataFrame
+    combined_df = pd.DataFrame(combined_data).fillna("")  # Ensure NaNs become empty strings
+    train_df, test_df = split_train_test(combined_df,
+                                         test_size=0.2,
+                                         random_state=42)
+    print("Train DataFrame shape:", train_df.shape)
+    print("Test DataFrame shape:", test_df.shape)
